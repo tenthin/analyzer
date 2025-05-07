@@ -127,14 +127,17 @@ ${videoTexts.join('\n')}
       const info = extractChannelInfo(channelUrl);
       const channelId = await resolveChannelId(info);
       const videos = await fetchVideos(channelId);
-      const analysis = await analyzeVideos(videos);
-      setResult(analysis);
+  
+      const videoTexts = videos.join('\n');
+      const response = await axios.post('https://your-backend-url.com/analyze', { videoTexts });
+      setResult(response.data);
     } catch (err) {
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
   };
+  
 
   const renderCards = () => {
     const questions = [
